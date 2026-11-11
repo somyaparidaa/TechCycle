@@ -1,0 +1,28 @@
+# Ignore Python cache & virtual environments
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.env
+.env.local
+
+# Ignore archives & bundles
+*.zip
+*.tar.gz
+*.csv
+
+# Ignore test image if necessary, but allow test_image.jpg if needed
+!test_image.jpg
+
+# Ignore model binaries and checkpoints
+*.pb
+*.keras
+*.h5
+*.weights.h5
+checkpoints/
+models/*.keras
+models/*.h5
+
+# Ignore IDE settings
+.vscode/
+.idea/

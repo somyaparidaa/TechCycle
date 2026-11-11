@@ -1,0 +1,262 @@
+/* Root Variables for Easy Theming */
+:root {
+  --primary-bg: rgb(229, 247, 200);
+  --secondary-bg: #f0fdf4;
+  --accent-green: #16a34a;
+  --text-dark: #1f2937;
+  --text-light: #4b5563;
+  --transition-speed: 0.3s;
+}
+
+/* Container with Enhanced Styling */
+.container {
+  background-color: var(--primary-bg);
+  border-radius: 12px;
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.1),
+    0 6px 12px rgba(0, 0, 0, 0.05); 
+  padding: 60px;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-speed) ease;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg, 
+    transparent, 
+    rgba(255,255,255,0.05), 
+    transparent
+  );
+  transform: rotate(-45deg);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--transition-speed) ease;
+}
+
+.container:hover::before {
+  opacity: 1;
+}
+
+/* Title with Subtle Animation */
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 32px;
+  color: var(--text-dark);
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 80px;
+  height: 4px;
+  background: var(--accent-green);
+  border-radius: 2px;
+  transition: width var(--transition-speed) ease;
+}
+
+.title:hover::after {
+  width: 120px;
+}
+
+/* Responsive Grid Layout with Enhanced Interactivity */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  transition: all var(--transition-speed) ease;
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: 2fr 1fr;
+    gap: 48px;
+  }
+}
+
+/* Map Container with Hover Effect */
+.map-container {
+  position: relative;
+  z-index: 1;
+  height: 600px;
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 99;
+}
+
+/* Info Section with Enhanced Spacing */
+.info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Search Box with Interactive Design */
+.search-box {
+  background-color: var(--secondary-bg);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all var(--transition-speed) ease;
+}
+
+.search-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.search-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--text-dark);
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: all var(--transition-speed) ease;
+}
+
+.search-input:focus {
+  border-color: var(--accent-green);
+  outline: none;
+  box-shadow: 0 4px 8px rgba(22, 163, 74, 0.1);
+}
+
+/* Centers List with Advanced Styling */
+.centers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Search Box */
+.search-box {
+  background-color: #f0fdf4;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.search-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px;
+  padding-right: 0px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Centers List */
+.centers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.center-card {
+  background-color: #f9fafb;
+  padding: 20px;
+  border-radius: 12px;
+  transition: all var(--transition-speed) ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.center-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background-color: var(--accent-green);
+  transform: scaleY(0);
+  transition: transform var(--transition-speed) ease;
+  transform-origin: bottom;
+}
+
+.center-card:hover::before {
+  transform: scaleY(1);
+}
+
+.center-card:hover {
+  transform: translateX(10px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.center-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.icons{
+  height: 24px;
+  width: 24px;
+  color: var(--accent-green);
+  margin-top: 4px;
+  transition: transform var(--transition-speed) ease;
+}
+
+.center-card:hover .icons {
+  transform: rotate(15deg);
+}
+
+.center-name {
+  font-weight: 700;
+  color: var(--text-dark);
+  transition: color var(--transition-speed) ease;
+}
+
+.center-card:hover .center-name {
+  color: var(--accent-green);
+}
+
+.center-address,
+.center-phone {
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+/* Subtle Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.center-card {
+  animation: fadeIn 0.5s ease backwards;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+  }
+
+  .grid {
+    gap: 16px;
+  }
+}

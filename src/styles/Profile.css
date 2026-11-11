@@ -1,0 +1,1402 @@
+/* Root variables for consistent theming */
+:root {
+  --primary: #ff9900; /* Amazon Orange */
+  --primary-hover: #e68a00; /* Darker Orange for hover */
+  --secondary: #232f3e; /* Amazon Dark Blue */
+  --secondary-hover: #1a2430;
+  --success: #007d65; /* Amazon-like Green */
+  --warning: #dd5200; /* Amazon-like Warning Orange */
+  --danger: #cc0c39; /* Amazon-like Red */
+  --light-bg: #ffffff; /* White background */
+  --border-color: #ddd; /* Amazon-like border */
+  --text-dark: #0f1111; /* Amazon Text Black */
+  --text-medium: #555555; /* Medium Gray */
+  --text-light: #666666; /* Lighter Gray */
+  --link-color: #007185; /* Amazon Link Blue */
+  --link-hover-color: #c7511f; /* Amazon Link Hover Orange */
+  --radius-sm: 4px; /* Amazon uses subtle rounding */
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --transition: all 0.2s ease;
+}
+
+/* Main layout and containers */
+.profile-container {
+  max-width: 1900px; /* Allow full width, child will control max content width */
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  font-family: "Amazon Ember", Arial, sans-serif;
+  position: relative;
+  background-color: var(--light-bg);
+  color: var(--text-dark);
+}
+
+.techmarketplace-app {
+  /* Main wrapper from Profile.js */
+  font-family: "Amazon Ember", Arial, sans-serif;
+  background-color: var(--light-bg);
+  color: var(--text-dark);
+  min-height: 100vh;
+  /* No max-width here, let children define it */
+}
+
+.marketplace-header {
+  background-color: var(--secondary); /* Amazon Dark Blue Header */
+  color: #ffffff;
+  padding: 10px 0; /* Padding will be on the inner container */
+  box-shadow: var(--shadow-sm);
+  width: 100%;
+}
+
+.marketplace-header .header-container {
+  max-width: 1480px; /* Wider header content */
+  margin: 0 auto;
+  padding: 0 24px; /* Add horizontal padding */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 20px; /* Add gap between logo/search and main-nav if they wrap */
+}
+
+.marketplace-header .logo-search {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Space between logo and search bar */
+  flex-grow: 1; /* Allow logo-search to take up significant space */
+}
+
+.marketplace-header .marketplace-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between icon and text in logo */
+}
+
+.marketplace-header .marketplace-logo h1 {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 700;
+}
+.marketplace-header .marketplace-logo svg {
+  color: var(--primary); /* Orange logo icon */
+}
+
+.marketplace-header .global-search input {
+  border: 1px solid #cdcdcd;
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  /* min-width: 300px; Let flexbox handle width more dynamically */
+  flex-grow: 1; /* Input takes space within global-search */
+}
+
+.marketplace-header .global-search {
+  display: flex;
+  align-items: center;
+  flex-grow: 1; /* Allow search container to grow */
+  max-width: 700px; /* Max width for search bar area */
+}
+
+.marketplace-header .global-search .search-button {
+  background-color: var(--primary);
+  border: 1px solid var(--primary-hover);
+  color: var(--text-dark);
+}
+.marketplace-header .global-search .search-button:hover {
+  background-color: var(--primary-hover);
+}
+
+.marketplace-header .nav-link {
+  color: #333;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.marketplace-header .main-navigation {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between nav items */
+  flex-shrink: 0; /* Prevent main navigation from shrinking too much */
+}
+
+.marketplace-header .user-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between user action buttons */
+  margin-left: 15px; /* Space it from the main nav links */
+}
+
+.marketplace-header .nav-link:hover {
+  background-color: var(--secondary-hover);
+  color: #ffffff;
+}
+
+.marketplace-header .nav-link.active {
+  color: var(--primary); /* Orange for active link */
+  font-weight: bold;
+}
+
+.marketplace-header .user-button,
+.marketplace-header .help-button {
+  color: #333;
+}
+.marketplace-header .user-button:hover,
+.marketplace-header .help-button:hover {
+  color: #000000;
+}
+
+/* Notification styling */
+.notification-wrapper {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  max-width: 350px;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.success-notification,
+.error-notification {
+  padding: 14px 20px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+}
+
+.success-notification {
+  background-color: #e7f7ed;
+  border-left: 4px solid var(--success);
+  color: #1d623a;
+}
+
+.error-notification {
+  background-color: #ffefef;
+  border-left: 4px solid var(--danger);
+  color: #8a1e18;
+}
+
+.success-icon,
+.error-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+.success-icon {
+  background-color: var(--success);
+  color: white;
+}
+
+.error-icon {
+  background-color: var(--danger);
+  color: white;
+}
+
+/* Tabs styling */
+.profile-tabs {
+  max-width: 1480px; /* Match content width */
+  margin: 0 auto 30px auto; /* Center and add bottom margin */
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.profile-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-medium); /* Adjusted for better visibility */
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition);
+}
+
+.tab-button:hover {
+  color: var(--link-color); /* Use link color for hover */
+}
+
+.tab-button.active {
+  color: var(--primary); /* Active tab uses primary orange */
+  font-weight: 700;
+}
+
+.tab-button.active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--primary);
+  animation: slide-in 0.3s ease;
+}
+
+@keyframes slide-in {
+  from {
+    width: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  to {
+    width: 100%;
+    left: 0;
+    transform: translateX(0);
+  }
+}
+
+/* Section headers */
+.section-header {
+  margin-bottom: 24px;
+}
+
+.section-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  font-size: 22px;
+  font-weight: 600;
+  /* color: var(--text-dark); */
+}
+
+.section-header p {
+  color: var(var(--text-medium));
+  font-size: 15px;
+}
+
+.section-header-with-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.section-header-with-action h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  /* color: var(--text-medium); */
+}
+
+/* Button styles */
+.action-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background-color: #f0f2f2; /* Amazon-like light gray button */
+  border: 1px solid #adb1b8; /* Amazon-like border */
+  border-radius: var(--radius-md); /* Slightly more rounded */
+  color: var(--text-dark);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset;
+}
+
+.action-button:hover {
+  background-color: #e3e6e6; /* Darker on hover */
+  border-color: #a2a6ac;
+}
+
+/* Device card styling */
+.listings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* Ensure main content areas for tabs are also wide */
+.marketplace-container,
+.sell-container,
+.wishlist-container {
+  max-width: 1480px;
+  margin: 0 auto; /* Center the content */
+  padding: 24px; /* Add padding for content spacing */
+}
+
+/* Layout for sidebar and main content within marketplace-container */
+.marketplace-layout {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 24px; /* Space between sidebar and main content */
+  max-width: 1800px;
+}
+
+.filters-sidebar {
+  flex: 0 0 280px; /* Fixed width for sidebar, adjust as needed */
+  /* background-color: #f7f7f7; */
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  top: 20px; /* makes it sticky*/
+}
+
+.filter-section {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+.filter-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.filter-section h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+}
+
+.filter-options .category-option,
+.condition-options .condition-option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 6px 0;
+}
+
+.filter-options .category-option input[type="radio"],
+.condition-options .condition-option input[type="radio"] {
+  margin-right: 10px;
+  accent-color: var(--primary); /* Style the radio button itself */
+}
+
+.filter-options .category-option label,
+.condition-options .condition-option label {
+  font-size: 14px;
+  color: var(--text-medium);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.filter-options .category-option label:hover,
+.condition-options .condition-option label:hover {
+  color: var(--link-color);
+}
+
+.price-range {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.price-range .price-input {
+  display: flex;
+  align-items: center;
+  border: 1px solid #a6a6a6;
+  border-radius: var(--radius-sm);
+  padding: 0 8px;
+  flex: 1;
+}
+.price-range .price-input span {
+  /* For the '$' symbol */
+  color: var(--text-light);
+  font-size: 14px;
+}
+.price-range .price-input input[type="number"] {
+  border: none;
+  padding: 8px 4px; /* Adjust padding */
+  box-shadow: none;
+  width: 100%; /* Ensure input takes full width within its container */
+}
+.price-range .price-input input[type="number"]:focus {
+  box-shadow: none; /* Remove focus shadow if parent has one */
+}
+.price-separator {
+  color: var(--text-light);
+}
+
+/* Styling for filter action buttons */
+.filter-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+.filter-actions .clear-filters,
+.filter-actions .close-filters {
+  /* Assuming .close-filters is for mobile done button */
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+}
+.filter-actions .clear-filters {
+  background-color: var(--light-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-medium);
+}
+.filter-actions .clear-filters:hover {
+  background-color: #e9ecef;
+}
+.filter-actions .close-filters {
+  background-color: var(--primary);
+  border: 1px solid var(--primary-hover);
+  color: var(--text-dark);
+}
+.filter-actions .close-filters:hover {
+  background-color: var(--primary-hover);
+}
+
+/* Responsive adjustments for sidebar */
+@media (max-width: 992px) {
+  /* Adjust breakpoint as needed */
+  .filters-sidebar {
+    flex: 0 0 220px; /* Slightly narrower sidebar for medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .marketplace-layout {
+    flex-direction: column; /* Stack sidebar and content */
+  }
+  .filters-sidebar {
+    flex: 1 1 100%; /* Full width when stacked */
+    margin-bottom: 24px;
+    /* border-right: none; */ /* Remove side border if any */
+    /* padding-right: 0; */
+  }
+}
+
+.marketplace-content {
+  flex: 1; /* Takes remaining space */
+  min-width: 0; /* Prevents flex item from overflowing if its content is intrinsically wider */
+}
+
+.marketplace-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f7f7f7; /* Light background for controls bar */
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.results-info {
+  font-size: 14px;
+  color: var(--text-medium);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-toggle {
+  /* Button to show/hide filters on mobile */
+  background-color: var(--light-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-medium);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: none; /* Hidden by default, shown in mobile media query */
+  align-items: center;
+  gap: 6px;
+}
+.filter-toggle:hover {
+  background-color: #e9ecef;
+}
+
+.view-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.sort-dropdown label {
+  font-size: 14px;
+  color: var(--text-medium);
+  margin-right: 8px;
+}
+
+.sort-dropdown select {
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid #a6a6a6;
+  background-color: #fff;
+  font-size: 14px;
+}
+
+.view-mode .view-button {
+  background-color: var(--light-bg);
+  border: 1px solid var(--border-color);
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--text-light);
+}
+.view-mode .view-button.active {
+  background-color: var(--primary);
+  color: var(--text-dark);
+  border-color: var(--primary-hover);
+}
+.view-mode .view-button:hover:not(.active) {
+  background-color: #e9ecef;
+}
+
+/* Device Grid specific adjustments */
+.device-grid {
+  /* This class is used in Profile.js for the grid/list container */
+  display: grid;
+  gap: 20px; /* Consistent gap */
+}
+
+.device-grid.grid {
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(250px, 1fr)
+  ); /* Adjust minmax for card size */
+  width: 100%;
+}
+
+.device-grid.list .device-card {
+  flex-direction: row; /* For list view */
+  align-items: flex-start; /* Align items to the start in list view */
+}
+
+.device-grid.list .device-image-container {
+  /* Adjust image container for list view */
+  flex: 0 0 180px; /* Fixed width for image in list view */
+  height: auto; /* Auto height */
+  max-height: 180px; /* Max height for image */
+}
+.device-grid.list .device-image-container img {
+  object-fit: contain; /* Ensure full image is visible */
+}
+
+.device-grid.list .device-info {
+  flex: 1;
+  padding-left: 16px; /* Add padding between image and info in list view */
+}
+
+/* Responsive: Show filter toggle on mobile - This was part of .filters-sidebar media query, ensure it's correctly placed or merged */
+@media (max-width: 768px) {
+  /* .filters-sidebar styles for mobile are already present */
+  .filter-toggle {
+    display: inline-flex; /* Show the toggle button */
+  }
+  .marketplace-controls {
+    /* Adjust controls for stacking on mobile */
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Suggested Section Styling */
+.suggested-section {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+.suggested-section h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.suggested-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+.suggested-card {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background-color: #fff;
+}
+.suggested-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+.suggested-card .suggested-info {
+  padding: 12px;
+}
+.suggested-card h4 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--link-color);
+}
+.suggested-card .suggested-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: #b12704;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.device-card {
+  border-radius: var(--radius-md); /* Amazon uses less pronounced rounding */
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  background-color: #ffffff; /* Explicitly white */
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  color: var(--text-dark); /* Ensure text inside card uses theme */
+}
+
+.device-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Condition-based styling */
+.device-card.new {
+  border-top: 4px solid var(--success);
+}
+.device-card.used {
+  border-top: 4px solid var(--primary);
+}
+.device-card.damaged {
+  border-top: 4px solid var(--warning);
+}
+
+.device-image {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  background-color: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.device-image-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.device-card:hover .device-image-img {
+  transform: scale(1.05);
+}
+
+.image-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  background-color: #f3f4f6;
+}
+
+.image-fallback svg {
+  margin-bottom: 8px;
+}
+
+.device-content {
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.device-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.device-header h3,
+.device-name {
+  /* Target .device-name as well */
+  font-size: 16px; /* Amazon product titles are often this size in grids */
+  font-weight: 500;
+  color: var(--link-color); /* Product names are often links */
+  margin: 0 0 4px 0;
+  line-height: 1.3;
+}
+.device-header h3:hover,
+.device-name:hover {
+  color: var(--link-hover-color);
+}
+
+.device-price {
+  background-color: transparent; /* Remove background */
+  padding: 0;
+  border-radius: 0;
+  font-weight: 700;
+  font-size: 20px; /* Larger price */
+  color: #b12704; /* Amazon's typical price color */
+}
+.device-price svg {
+  /* If DollarSign is used */
+  color: #b12704;
+  margin-right: 2px;
+}
+
+.device-brand {
+  color: var(--text-light);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.device-condition {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.condition-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.condition-icon.new {
+  color: var(--success);
+}
+.condition-icon.used {
+  color: var(--primary);
+}
+.condition-icon.damaged {
+  color: var(--warning);
+}
+
+.device-description {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.device-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid var(--light-bg);
+  font-size: 13px;
+  color: var(--text-light);
+}
+
+.seller-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.buy-actions {
+  padding: 16px;
+  background-color: var(--light-bg);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.contact-button {
+  background-color: var(--primary); /* Amazon Orange */
+  color: var(--text-dark); /* Text color for orange button */
+  border: 1px solid #a88734; /* Border for orange button */
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset;
+}
+
+.contact-button:hover {
+  background-color: var(--primary-hover); /* Darker orange */
+  border-color: #9c7e31;
+}
+
+/* Form styling */
+.sell-container {
+  /* max-width, margin, and padding are now handled by the common rule above */
+  background-color: var(--light-bg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+  animation: fadeIn 0.4s ease;
+  color: var(--text-dark);
+}
+
+/* Ensure banner button uses theme */
+.banner-button {
+  background-color: var(--primary);
+  color: var(--text-dark);
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--primary-hover);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.banner-button:hover {
+  background-color: var(--primary-hover);
+}
+
+/* Primary button used in sell tab */
+.primary-button {
+  background-color: var(--primary);
+  color: var(--text-dark);
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--primary-hover);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.primary-button:hover {
+  background-color: var(--primary-hover);
+}
+
+/* General link styling */
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-medium);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="file"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #a6a6a6; /* Amazon-like input border */
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  transition: var(--transition);
+  background-color: #fff;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.07) inset;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="file"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary); /* Orange focus */
+  box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.5),
+    0 1px 0 rgba(0, 0, 0, 0.07) inset; /* Amazon focus style */
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.char-count {
+  margin-top: 4px;
+  text-align: right;
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+.price-input {
+  position: relative;
+}
+
+.currency-symbol {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+}
+
+input[type="number"] {
+  padding-left: 24px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.preview-button {
+  padding: 10px 16px;
+  background-color: var(--light-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-medium);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  flex: 1;
+}
+
+.preview-button:hover {
+  background-color: #e2e8f0;
+}
+
+.submit-button,
+.publish-button {
+  padding: 10px 16px;
+  background-color: var(--primary); /* Amazon Orange */
+  border: 1px solid #a88734; /* Border for orange button */
+  border-radius: var(--radius-sm);
+  color: var(--text-dark); /* Text color for orange button */
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  flex: 1;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset;
+}
+
+.submit-button:hover,
+.publish-button:hover {
+  background-color: var(--primary-hover); /* Darker orange */
+  border-color: #9c7e31;
+}
+
+.submit-button:disabled,
+.publish-button:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* Image preview in forms */
+.image-preview-container {
+  margin-top: 1rem;
+}
+
+.image-preview {
+  position: relative;
+  margin-top: 0.5rem;
+}
+
+.image-preview img {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: var(--radius-sm);
+  display: block;
+  object-fit: cover;
+}
+
+.remove-image-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.remove-image-btn:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+/* Preview container */
+.preview-container {
+  background-color: var(--light-bg);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  border: 1px solid var(--border-color);
+  animation: fadeIn 0.4s ease;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.preview-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-medium);
+  margin: 0;
+}
+
+.close-preview {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.close-preview:hover {
+  background-color: #e2e8f0;
+  color: var(--text-medium);
+}
+
+.device-card.preview {
+  max-width: 600px;
+  margin: 0 auto 24px;
+}
+
+.preview-actions {
+  display: flex;
+  gap: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.edit-button {
+  padding: 10px 16px;
+  background-color: var(--light-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-medium);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  flex: 1;
+}
+
+.edit-button:hover {
+  background-color: #e2e8f0;
+}
+
+/* Empty state */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  background-color: var(--light-bg);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-lg);
+  color: var(--text-light);
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+}
+
+.empty-state svg {
+  color: #94a3b8;
+  margin-bottom: 16px;
+}
+
+.empty-state h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-medium);
+}
+
+.empty-state p {
+  margin: 0 0 20px;
+  font-size: 15px;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.loading-spinner::after {
+  content: "";
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Buy section specific styles */
+.buy-section {
+  animation: fadeIn 0.4s ease;
+}
+
+.filter-section {
+  background-color: var(--light-bg);
+  padding: 16px;
+  border-radius: var(--radius-md);
+  margin-bottom: 24px;
+  border: 1px solid var(--border-color);
+}
+
+.search-container {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.search-container svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 12px 10px 40px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  transition: var(--transition);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.filter-controls {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.price-filter,
+.condition-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.price-filter span,
+.condition-filter span {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-medium);
+}
+
+.price-inputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.price-input-container {
+  position: relative;
+}
+
+.price-input-container .currency-symbol {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+  z-index: 1;
+}
+
+.price-input-container input {
+  width: 100px;
+  padding-left: 24px;
+}
+
+.condition-select {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  background-color: white;
+  color: var(--text-medium);
+  transition: var(--transition);
+}
+
+.condition-select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.condition-select.new {
+  border-left: 3px solid var(--success);
+}
+.condition-select.used {
+  border-left: 3px solid var(--primary);
+}
+.condition-select.damaged {
+  border-left: 3px solid var(--warning);
+}
+
+.clear-filters-button {
+  margin-top: 12px;
+  padding: 8px 16px;
+  background-color: var(--border-color);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: #4b5563;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.clear-filters-button:hover {
+  background-color: #d1d5db;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 16px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .listings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-controls {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .price-filter,
+  .condition-filter {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .price-inputs {
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .notification-wrapper {
+    left: 16px;
+    right: 16px;
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 16px;
+  }
+
+  .listings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions,
+  .preview-actions {
+    flex-direction: column;
+  }
+
+  .notification-wrapper {
+    left: 16px;
+    right: 16px;
+    max-width: none;
+  }
+}

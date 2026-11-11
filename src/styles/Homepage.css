@@ -1,0 +1,91 @@
+/* Ensures full height and background image properties */
+.hero-container {
+  background-image: url("../images/Ewaste_bg.jpg");
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Full screen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 0;
+  margin: 0;
+  margin-top: -80px; /* Adjust this value to match your navbar height */
+  padding-top: 80px;
+}
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+/* Overlay effect */
+.hero-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #2ca577 0%, #113f2d 100%);
+  opacity: 0.4;
+}
+
+/* Content styling */
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-title {
+  font-family: "IM FELL French Canon", serif;
+  font-size: 5rem; /* Increased size */
+  line-height: 1.2;
+  margin-top: 1px;
+  margin-bottom:20px;
+  padding: 0;
+}
+
+.typed-text {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid white; /* Cursor */
+  margin: 0;
+  width: 0;
+  animation: typing 3s steps(17) forwards,
+    blink 0.7s step-end infinite alternate;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 17ch;
+  } /* Adjust the value to match the character count */
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+.hero-button {
+  margin-top: 5px;
+  padding: 12px 24px;
+  background-color: #22c55e; /* Green */
+  color: white;
+  font-size: 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+link,a{
+  text-decoration: none;
+}
+.hero-button:hover {
+  background-color: #16a34a; /* Darker green */
+}

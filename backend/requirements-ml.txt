@@ -1,0 +1,9 @@
+# TechCycle ML Pipeline Requirements
+# Tested with Python 3.10 and 3.11 (Google Colab and Local)
+tensorflow>=2.15.0
+keras>=3.0.0
+numpy>=1.26.0
+pillow>=10.0.0
+scikit-learn>=1.3.0
+matplotlib>=3.8.0
+pytest>=8.0.0

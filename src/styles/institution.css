@@ -1,0 +1,1048 @@
+/* E-Waste Institutional Portal Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.ewaste-institutional-portal {
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    #16a34a 0%,
+    #059669 30%,
+    #0d9488 70%,
+    #0f766e 100%
+  );
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #333;
+}
+
+/* Navigation */
+.ewaste-portal-navigation {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.ewaste-portal-navigation::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    #16a34a 0%,
+    #059669 33%,
+    #0d9488 66%,
+    #0f766e 100%
+  );
+}
+
+.ewaste-nav-tabs {
+  display: flex;
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ewaste-nav-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #666;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.ewaste-nav-tab:hover {
+  color: #16a34a;
+  background: rgba(22, 163, 74, 0.05);
+  transform: scale(1.05);
+}
+
+.ewaste-nav-tab.ewaste-active {
+  color: #16a34a;
+  border-bottom-color: #16a34a;
+  background: rgba(22, 163, 74, 0.1);
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.15);
+}
+
+.ewaste-tab-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Portal Content */
+.ewaste-portal-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Overview Section */
+.ewaste-overview-section {
+  color: white;
+}
+
+.ewaste-hero-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+
+.ewaste-hero-text h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #fff, #dcfce7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ewaste-hero-text p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.ewaste-impact-stats {
+  display: flex;
+  gap: 2rem;
+}
+
+.ewaste-stat-item {
+  text-align: center;
+}
+
+.ewaste-stat-number {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #bbf7d0;
+}
+
+.ewaste-stat-label {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.ewaste-hero-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.ewaste-floating-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(187, 247, 208, 0.3);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  transform: translateY(0);
+  animation: ewaste-float 6s ease-in-out infinite;
+  box-shadow: 0 10px 20px rgba(22, 163, 74, 0.2);
+}
+
+@keyframes ewaste-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.ewaste-icon-large {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1rem;
+  color: #bbf7d0;
+}
+
+.ewaste-floating-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.ewaste-floating-card p {
+  opacity: 0.8;
+}
+
+/* Programs Section */
+.ewaste-programs-grid h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.ewaste-programs-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.ewaste-program-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 2rem;
+  color: #333;
+  transition: all 0.3s ease;
+  border: 3px solid #bbf7d0;
+  position: relative;
+  overflow: hidden;
+}
+
+.ewaste-program-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    #16a34a 0%,
+    #059669 33%,
+    #0d9488 66%,
+    #0f766e 100%
+  );
+}
+
+.ewaste-program-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px rgba(22, 163, 74, 0.25);
+  border-color: #16a34a;
+}
+
+.ewaste-program-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.ewaste-program-header h3 {
+  font-size: 1.5rem;
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.ewaste-participants-badge {
+  background: linear-gradient(90deg, #16a34a 0%, #0d9488 100%);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+}
+
+.ewaste-program-description {
+  color: #666;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.ewaste-program-features {
+  margin-bottom: 1.5rem;
+}
+
+.ewaste-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.ewaste-check-icon {
+  width: 16px;
+  height: 16px;
+  color: #16a34a;
+}
+
+.ewaste-program-footer {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 1.5rem;
+}
+
+.ewaste-program-meta {
+  margin-bottom: 1rem;
+}
+
+.ewaste-benefit {
+  display: block;
+  font-weight: 600;
+  color: #16a34a;
+  margin-bottom: 0.25rem;
+}
+
+.ewaste-duration {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.ewaste-select-program-btn {
+  width: 100%;
+  background: linear-gradient(90deg, #16a34a 0%, #0d9488 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+}
+
+.ewaste-select-program-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(22, 163, 74, 0.4);
+}
+
+/* Success Stories Section */
+.ewaste-success-stories-section {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 3rem;
+  color: #333;
+  backdrop-filter: blur(15px);
+  border: 3px solid #bbf7d0;
+  position: relative;
+}
+
+.ewaste-success-stories-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    #16a34a 0%,
+    #059669 33%,
+    #0d9488 66%,
+    #0f766e 100%
+  );
+  border-radius: 20px 20px 0 0;
+}
+
+.ewaste-success-stories-section h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #16a34a;
+}
+
+.ewaste-stories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.ewaste-story-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(22, 163, 74, 0.1);
+  border-left: 4px solid #16a34a;
+  transition: all 0.3s ease;
+}
+
+.ewaste-story-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(22, 163, 74, 0.2);
+}
+
+.ewaste-story-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.ewaste-institution-icon {
+  width: 24px;
+  height: 24px;
+  color: #16a34a;
+}
+
+.ewaste-story-header h3 {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.ewaste-institution-type {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.ewaste-achievement-star {
+  width: 20px;
+  height: 20px;
+  color: #bbf7d0;
+  margin-left: auto;
+}
+
+.ewaste-story-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.ewaste-metric {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ewaste-metric-icon {
+  width: 16px;
+  height: 16px;
+  color: #16a34a;
+}
+
+.ewaste-achievement {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #ecfdf5;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #bbf7d0;
+}
+
+.ewaste-award-icon {
+  width: 16px;
+  height: 16px;
+  color: #16a34a;
+}
+
+/* Impact Visualization */
+.ewaste-impact-visualization {
+  background: linear-gradient(135deg, #16a34a, #0d9488);
+  border-radius: 16px;
+  padding: 2rem;
+  color: white;
+  box-shadow: 0 10px 25px rgba(22, 163, 74, 0.3);
+}
+
+.ewaste-impact-visualization h3 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.ewaste-impact-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.ewaste-impact-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  border: 2px solid rgba(187, 247, 208, 0.3);
+  transition: all 0.3s ease;
+}
+
+.ewaste-impact-card:hover {
+  transform: scale(1.05);
+  border-color: rgba(187, 247, 208, 0.6);
+}
+
+.ewaste-impact-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #bbf7d0;
+  margin-bottom: 0.5rem;
+}
+
+.ewaste-impact-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.ewaste-impact-comparison {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Application Section */
+.ewaste-application-section {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 3rem;
+  color: #333;
+  backdrop-filter: blur(15px);
+  border: 3px solid #bbf7d0;
+  position: relative;
+}
+
+.ewaste-application-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    #16a34a 0%,
+    #059669 33%,
+    #0d9488 66%,
+    #0f766e 100%
+  );
+  border-radius: 20px 20px 0 0;
+}
+
+.ewaste-application-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.ewaste-application-header h2 {
+  font-size: 2.5rem;
+  color: #16a34a;
+  margin-bottom: 1rem;
+}
+
+.ewaste-selected-program-info {
+  background: #ecfdf5;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #16a34a;
+  margin-top: 1rem;
+  border: 1px solid #bbf7d0;
+}
+
+.ewaste-selected-program-info h3 {
+  color: #16a34a;
+  margin-bottom: 0.5rem;
+}
+
+/* Application Steps */
+.ewaste-application-steps {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ewaste-steps-indicator {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.ewaste-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.ewaste-step-number {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.ewaste-step.ewaste-active .ewaste-step-number {
+  background: linear-gradient(90deg, #16a34a 0%, #0d9488 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+}
+
+.ewaste-step-label {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.ewaste-step.ewaste-active .ewaste-step-label {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+/* Form Styles */
+.ewaste-form-step {
+  margin-bottom: 2rem;
+}
+
+.ewaste-form-step h3 {
+  font-size: 1.5rem;
+  color: #16a34a;
+  margin-bottom: 1.5rem;
+}
+
+.ewaste-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.ewaste-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.ewaste-form-group.ewaste-full-width {
+  grid-column: 1 / -1;
+}
+
+.ewaste-form-group label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #374151;
+}
+
+.ewaste-form-group input,
+.ewaste-form-group select,
+.ewaste-form-group textarea {
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.ewaste-form-group input:focus,
+.ewaste-form-group select:focus,
+.ewaste-form-group textarea:focus {
+  outline: none;
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+}
+
+/* Goals Selection */
+.ewaste-goals-selection p {
+  margin-bottom: 1rem;
+  color: #666;
+}
+
+.ewaste-goals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.ewaste-goal-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ewaste-goal-option:hover {
+  border-color: #16a34a;
+  background: #ecfdf5;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.15);
+}
+
+.ewaste-goal-option.ewaste-selected {
+  border-color: #16a34a;
+  background: #ecfdf5;
+  box-shadow: 0 10px 15px rgba(22, 163, 74, 0.2);
+}
+
+.ewaste-goal-check {
+  width: 20px;
+  height: 20px;
+  color: #16a34a;
+}
+
+/* Resources Section */
+.ewaste-resources-section {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 3rem;
+  color: #333;
+  backdrop-filter: blur(15px);
+  border: 3px solid #bbf7d0;
+  position: relative;
+}
+
+.ewaste-resources-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    #16a34a 0%,
+    #059669 33%,
+    #0d9488 66%,
+    #0f766e 100%
+  );
+  border-radius: 20px 20px 0 0;
+}
+
+.ewaste-resources-section h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #16a34a;
+  margin-bottom: 2rem;
+}
+
+.ewaste-resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.ewaste-resource-category h3 {
+  font-size: 1.5rem;
+  color: #16a34a;
+  margin-bottom: 1rem;
+}
+
+.ewaste-resource-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ewaste-resource-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid #e2e8f0;
+}
+
+.ewaste-resource-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(22, 163, 74, 0.2);
+  border-color: #bbf7d0;
+}
+
+.ewaste-resource-icon {
+  width: 24px;
+  height: 24px;
+  color: #16a34a;
+  margin-top: 0.25rem;
+}
+
+.ewaste-resource-item h4 {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 0.25rem;
+}
+
+.ewaste-resource-item p {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Support Contact */
+.ewaste-support-contact {
+  background: linear-gradient(135deg, #16a34a, #0d9488);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  color: white;
+  box-shadow: 0 10px 25px rgba(22, 163, 74, 0.3);
+}
+
+.ewaste-support-contact h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.ewaste-support-contact p {
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.ewaste-contact-options {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ewaste-contact-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ewaste-contact-btn:not(.ewaste-secondary) {
+  background: white;
+  color: #16a34a;
+}
+
+.ewaste-contact-btn.ewaste-secondary {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.ewaste-contact-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Additional Form Elements */
+.ewaste-resource-checkboxes,
+.ewaste-timeline-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ewaste-checkbox-label,
+.ewaste-timeline-options label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.ewaste-checkbox-label input,
+.ewaste-timeline-options input {
+  width: 18px;
+  height: 18px;
+  accent-color: #16a34a;
+}
+
+.ewaste-document-upload {
+  margin-top: 2rem;
+}
+
+.ewaste-upload-area {
+  border: 2px dashed #bbf7d0;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  background: #f0fdf4;
+}
+
+.ewaste-upload-area:hover {
+  border-color: #16a34a;
+  background: #ecfdf5;
+}
+
+.ewaste-upload-icon {
+  width: 48px;
+  height: 48px;
+  color: #16a34a;
+  margin: 0 auto 1rem;
+}
+
+.ewaste-upload-btn {
+  background: linear-gradient(90deg, #16a34a 0%, #0d9488 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+}
+
+.ewaste-upload-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(22, 163, 74, 0.4);
+}
+
+/* Form Navigation */
+.ewaste-form-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.ewaste-nav-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ewaste-prev-btn {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.ewaste-prev-btn:hover {
+  background: #e5e7eb;
+  transform: scale(1.05);
+}
+
+.ewaste-next-btn,
+.ewaste-submit-btn {
+  background: linear-gradient(90deg, #16a34a 0%, #0d9488 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+}
+
+.ewaste-nav-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ewaste-next-btn:hover,
+.ewaste-submit-btn:hover {
+  box-shadow: 0 10px 20px rgba(22, 163, 74, 0.4);
+}
+
+/* Enhanced Animations */
+@keyframes ewaste-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes ewaste-bounce {
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40%,
+  43% {
+    transform: translate3d(0, -15px, 0);
+  }
+  70% {
+    transform: translate3d(0, -7px, 0);
+  }
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+@keyframes ewaste-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Focus styles for accessibility */
+.ewaste-nav-tab:focus,
+.ewaste-select-program-btn:focus,
+.ewaste-contact-btn:focus,
+.ewaste-upload-btn:focus,
+.ewaste-nav-btn:focus {
+  outline: 2px solid #16a34a;
+  outline-offset: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .ewaste-portal-content {
+    padding: 1rem;
+  }
+
+  .ewaste-hero-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .ewaste-hero-text h1 {
+    font-size: 2rem;
+  }
+
+  .ewaste-impact-stats {
+    justify-content: center;
+  }
+
+  .ewaste-nav-tabs {
+    overflow-x: auto;
+    padding: 0 1rem;
+  }
+
+  .ewaste-nav-tab {
+    white-space: nowrap;
+  }
+
+  .ewaste-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ewaste-contact-options {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ewaste-steps-indicator {
+    gap: 1rem;
+  }
+
+  .ewaste-step-label {
+    font-size: 0.8rem;
+  }
+
+  .ewaste-success-stories-section,
+  .ewaste-application-section,
+  .ewaste-resources-section {
+    padding: 2rem;
+  }
+}

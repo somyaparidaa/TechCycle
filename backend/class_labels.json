@@ -1,0 +1,146 @@
+{
+  "0": {
+    "name": "Bypass-capacitor",
+    "guide": "Can be recycled at e-waste centers. May contain harmful dielectric materials\u2014do not dispose in regular trash."
+  },
+  "1": {
+    "name": "Electrolytic-capacitor",
+    "guide": "Contains liquid/gel electrolytes\u2014handle carefully and recycle at specialized e-waste facilities."
+  },
+  "2": {
+    "name": "Integrated-micro-circuit",
+    "guide": "Should be removed from circuit boards and sent to certified electronic refining plants."
+  },
+  "3": {
+    "name": "LED",
+    "guide": "Do not throw in trash. Recycle at e-waste facility. May contain trace amounts of gallium, arsenic, or lead."
+  },
+  "4": {
+    "name": "PNP-transistor",
+    "guide": "Contains semiconductors. Recycle with other discrete electronics or at e-waste drop-offs."
+  },
+  "5": {
+    "name": "armature",
+    "guide": "High scrap metal content (copper windings, steel shaft). Recycle at metal recovery or e-waste yards."
+  },
+  "6": {
+    "name": "attenuator",
+    "guide": "May contain resistive carbon or ceramic materials\u2014send to e-waste recycling."
+  },
+  "7": {
+    "name": "cartridge-fuse",
+    "guide": "Contains metal alloy filaments and glass/ceramic cartridges. Recycle through specialized facilities."
+  },
+  "8": {
+    "name": "clip-lead",
+    "guide": "Metal and PVC/rubber components\u2014sanitize and reuse if intact, otherwise route to cable recycling."
+  },
+  "9": {
+    "name": "electric-relay",
+    "guide": "Contains copper coils, silver contact points, and plastics. Recycle responsibly for precious metals."
+  },
+  "10": {
+    "name": "filament",
+    "guide": "Typically found in specialized vacuum or incandescent equipment\u2014recycle through lighting programs."
+  },
+  "11": {
+    "name": "heat-sink",
+    "guide": "Made of extruded aluminum or copper\u2014valuable scrap metal. Highly recyclable at metal scrap facilities."
+  },
+  "12": {
+    "name": "induction-coil",
+    "guide": "Contains high-purity enameled copper wire. Extract and recycle for copper reclamation."
+  },
+  "13": {
+    "name": "jumper-cable",
+    "guide": "Reusable wire harnesses. If damaged, strip for insulated copper wire recycling."
+  },
+  "14": {
+    "name": "junction-transistor",
+    "guide": "Semiconductor device. Group with silicon-based components for e-waste processing."
+  },
+  "15": {
+    "name": "light-circuit",
+    "guide": "Printed circuit sub-assembly\u2014the entire sub-board should be sent to PCB refining."
+  },
+  "16": {
+    "name": "limiter-clipper",
+    "guide": "Circuit wave-shaping network\u2014recycle alongside PCB waste streams."
+  },
+  "17": {
+    "name": "local-oscillator",
+    "guide": "RF oscillator module\u2014handle with PCB waste or salvage quartz crystal resonators."
+  },
+  "18": {
+    "name": "memory-chip",
+    "guide": "Contains precious metals (gold wire bonding, copper). Certified e-waste refiners can reclaim metals."
+  },
+  "19": {
+    "name": "microchip",
+    "guide": "Silicon IC with packaging\u2014do not throw in municipal trash. Recycle with e-waste."
+  },
+  "20": {
+    "name": "microprocessor",
+    "guide": "High value CPU\u2014refine for gold, silver, and copper recovery with professional electronic recyclers."
+  },
+  "21": {
+    "name": "multiplexer",
+    "guide": "Logic/analog IC switch\u2014route to electronic scrap sorting."
+  },
+  "22": {
+    "name": "omni-directional-antenna",
+    "guide": "Inspect for physical reuse. Broken antennas should be recycled for brass/copper/aluminum."
+  },
+  "23": {
+    "name": "potential-divider",
+    "guide": "Resistive network\u2014recycle with PCB scrap."
+  },
+  "24": {
+    "name": "potentiometer",
+    "guide": "Variable resistor. Test for reuse or recycle for copper wipers and resistive tracks."
+  },
+  "25": {
+    "name": "pulse-generator",
+    "guide": "Timing/pulse module\u2014recycle with small electronic assemblies."
+  },
+  "26": {
+    "name": "relay",
+    "guide": "Electromechanical switch containing copper coil and contacts\u2014disassemble or recycle at e-waste facility."
+  },
+  "27": {
+    "name": "rheostat",
+    "guide": "Heavy-duty variable wirewound resistor\u2014salvage ceramic core and nickel-chromium or copper resistance wire."
+  },
+  "28": {
+    "name": "semi-conductor",
+    "guide": "General semiconductor package\u2014recycle at specialized e-waste electronic plants."
+  },
+  "29": {
+    "name": "semiconductor-diode",
+    "guide": "Small two-terminal semiconductor\u2014recycle as part of board-level e-waste."
+  },
+  "30": {
+    "name": "shunt",
+    "guide": "Precision low-resistance current sensor (often manganin or brass)\u2014valuable alloy recycling."
+  },
+  "31": {
+    "name": "solenoid",
+    "guide": "Contains heavy copper wire electromagnetic coil\u2014recycle for copper and ferrous core recovery."
+  },
+  "32": {
+    "name": "stabilizer",
+    "guide": "Power regulation unit with transformers and control boards\u2014drop off at bulk e-waste collection points."
+  },
+  "33": {
+    "name": "step-down-transformer",
+    "guide": "Heavy transformer\u2014recycle for iron laminations and primary/secondary copper windings."
+  },
+  "34": {
+    "name": "step-up-transformer",
+    "guide": "High-voltage transformer\u2014do not scrap in general trash. Recycle for copper and silicon steel."
+  },
+  "35": {
+    "name": "transistor",
+    "guide": "General transistor package\u2014recycle with electronic components."
+  }
+}

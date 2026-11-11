@@ -1,0 +1,219 @@
+/* General Page Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+}
+
+.containers {
+  width: 100%;
+  box-sizing: border-box;
+  /* background-color: white; */
+}
+
+/* How We Work Section */
+.how-it-works {
+  text-align: center;
+  margin: 40px 0;
+  /* background-color: white; */
+}
+
+.how-it-works h2 {
+  color: #234a35;
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  /* text-shadow: 2px 2px 0.5px #27ae60; */
+}
+
+.steps {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-bottom: 55px;
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
+}
+
+.step {
+  background: #fff;
+  padding: 0px 20px;
+  width: 300px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  box-sizing: content-box;
+  margin: 15px;
+  padding-bottom: 40px;
+  padding-top: 20px;
+}
+
+/* Hover effect on each step box */
+.step:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.15);
+  border: solid yellow 1px;
+  scale: 1.07;
+}
+
+.icon {
+  font-size: 40px;
+  align-self: center;
+  margin-bottom: 5px;
+}
+
+.step-content h3 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #234a35;
+  margin-bottom: 8px;
+}
+
+.step-content p {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Newsletter Section */
+.newsletter {
+  background: linear-gradient(135deg, #234a35 100%,#2CA577 0%);/* Dark green background */
+  color: white;
+  padding: 50px 20px;
+}
+
+/* Two-column layout for newsletter content */
+.newsletter-content {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap; /* Adjust on smaller screens */
+}
+
+/* Left side text block */
+.newsletter-text {
+  flex: 1;
+  min-width: 250px;
+  margin-right: 20px;
+  font-family: "IM FELL French Canon", serif;
+}
+
+.newsletter-text h2 {
+  font-size: 4.5rem;
+  font-weight: bold;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.newsletter-text h2 span {
+  display: inline-block;
+  /* opacity: ; */
+}
+
+.newsletter-text p {
+  font-size: 24px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+/* Right side form block */
+.newsletter-form-wrapper {
+  flex: 1;
+  min-width: 300px;
+  background: linear-gradient(135deg, #234a35 70%, #2CA577 30%, );; /* Gold-ish background */
+  padding: 30px;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+/* Form styling */
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.newsletter-form input,
+.newsletter-form textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* Optional: Lighter background for inputs/textarea */
+.newsletter-form input,
+.newsletter-form textarea {
+  background-color: #fff;
+  color: #333;
+}
+
+.newsletter-form textarea {
+  height: 80px;
+  resize: vertical;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #f9f7f7;
+}
+
+.checkbox input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+.checkbox label {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* Button styling */
+.btns {
+  background-color: #ffdd57;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btns:hover {
+  background-color: #f2e969;
+  transform: scale(1.03);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .newsletter-content {
+    flex-direction: column;
+  }
+
+  .newsletter-text {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .newsletter-form-wrapper {
+    margin: 0 auto;
+  }
+}

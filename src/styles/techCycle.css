@@ -1,0 +1,130 @@
+/* Main container styles */
+.techcycle-container {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #0a1a17;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Circuit board background */
+.circuit-board {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0.15;
+  z-index: 1;
+}
+
+/* E-waste floating elements */
+.ewaste-elements {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+/* Animated floating elements */
+.ewaste-item {
+  position: absolute;
+  opacity: 0.4;
+  animation: float 15s infinite ease-in-out;
+}
+
+/* Floating animation */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+}
+
+/* Loader styles */
+.overlay,
+.loader {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 26, 23, 0.8);
+  z-index: 99;
+}
+
+.loader-circle {
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top: 4px solid #4ecca3;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Spin animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Main container */
+.container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  width: 100%;
+  z-index: 10;
+}
+
+/* Info section styles */
+.info-wrapper {
+  color: white;
+  max-width: 500px;
+  padding: 40px;
+}
+
+h1 {
+  color: #4ecca3;
+  font-size: 36px;
+}
+
+/* Login wrapper styles */
+.login-wrapper {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 40px;
+  width: 400px;
+}
+
+/* Button styles */
+.login-btn {
+  width: 100%;
+  padding: 15px;
+  background-color: #4ecca3;
+  color: #0a1a17;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #3db892;
+}
