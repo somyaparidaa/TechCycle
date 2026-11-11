@@ -91,23 +91,39 @@ const Register = () => {
       }
 
       setIsRegistering(true);
+      setErrorMessage("");
       try {
         const userCredential = await doCreateUserWithEmailAndPassword(
           email,
-          password
+          password,
+          name
         );
         const user = userCredential.user;
 
-        await updateProfile(user, { displayName: name });
+        if (user && name) {
+          await updateProfile(user, { displayName: name });
+        }
 
         navigate("/profile");
       } catch (error) {
-        setErrorMessage("Registration failed. Please try again.");
+        let message = "Registration failed. Please try again.";
+        if (error.code === "auth/email-already-in-use") {
+          message = "This email is already registered. Please sign in.";
+        } else if (error.code === "auth/weak-password") {
+          message = "Password should be at least 6 characters.";
+        } else if (error.code === "auth/invalid-email") {
+          message = "Please provide a valid email address.";
+        } else if (error.message) {
+          message = error.message;
+        }
+        setErrorMessage(message);
         setIsRegistering(false);
-        registerCardRef.current.classList.add("shake");
-        setTimeout(() => {
-          registerCardRef.current.classList.remove("shake");
-        }, 500);
+        if (registerCardRef.current) {
+          registerCardRef.current.classList.add("shake");
+          setTimeout(() => {
+            registerCardRef.current.classList.remove("shake");
+          }, 500);
+        }
       }
     }
   };

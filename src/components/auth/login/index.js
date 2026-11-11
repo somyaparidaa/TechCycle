@@ -85,17 +85,32 @@ const Login = () => {
     e.preventDefault();
     if (!isSigningIn) {
       setIsSigningIn(true);
+      setErrorMessage("");
       try {
         await doSignInWithEmailAndPassword(email, password);
       } catch (error) {
-        setErrorMessage("Sign in failed. Please check your credentials.");
+        let message = "Sign in failed. Please check your credentials.";
+        if (
+          error.code === "auth/invalid-credential" ||
+          error.code === "auth/wrong-password" ||
+          error.code === "auth/user-not-found"
+        ) {
+          message = "Invalid email or password.";
+        } else if (error.code === "auth/too-many-requests") {
+          message = "Too many failed attempts. Please try again later.";
+        } else if (error.message) {
+          message = error.message;
+        }
+        setErrorMessage(message);
         setIsSigningIn(false);
         
         const loginCard = loginCardRef.current;
-        loginCard.classList.add('shake');
-        setTimeout(() => {
-          loginCard.classList.remove('shake');
-        }, 500);
+        if (loginCard) {
+          loginCard.classList.add('shake');
+          setTimeout(() => {
+            loginCard.classList.remove('shake');
+          }, 500);
+        }
       }
     }
   };
@@ -104,16 +119,28 @@ const Login = () => {
     e.preventDefault();
     if (!isSigningIn) {
       setIsSigningIn(true);
+      setErrorMessage("");
       try {
         await doSignInWithGoogle();
       } catch (err) {
+        let message = "Google sign-in was cancelled or failed.";
+        if (err.code === "auth/popup-closed-by-user") {
+          message = "Sign-in popup closed before completion.";
+        } else if (err.code === "auth/popup-blocked") {
+          message = "Popup was blocked by your browser. Please allow popups.";
+        } else if (err.message) {
+          message = err.message;
+        }
+        setErrorMessage(message);
         setIsSigningIn(false);
         
         const loginCard = loginCardRef.current;
-        loginCard.classList.add('shake');
-        setTimeout(() => {
-          loginCard.classList.remove('shake');
-        }, 500);
+        if (loginCard) {
+          loginCard.classList.add('shake');
+          setTimeout(() => {
+            loginCard.classList.remove('shake');
+          }, 500);
+        }
       }
     }
   };

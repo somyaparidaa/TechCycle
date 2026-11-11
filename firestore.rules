@@ -1,0 +1,50 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // User profiles
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create, update: if isOwner(userId);
+      allow delete: if false; // Disallow profile deletion through client SDK
+    }
+
+    // Marketplace listings
+    match /marketplace/{listingId} {
+      // Anyone can browse listings in the marketplace
+      allow read: if true;
+      // Only authenticated users can list items under their own userId
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      // Only the listing owner can update or delete
+      allow update, delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+
+    // User wishlists
+    match /wishlist/{wishlistId} {
+      // Only the owner can view and manage their wishlist
+      allow read, create, update, delete: if isAuthenticated() &&
+        (request.resource.data.userId == request.auth.uid || resource.data.userId == request.auth.uid);
+    }
+
+    // Buyer-seller messages
+    match /messages/{messageId} {
+      // Sender or receiver can read the message
+      allow read: if isAuthenticated() &&
+        (resource.data.fromUserId == request.auth.uid || resource.data.toUserId == request.auth.uid);
+      // Sender can create a message from their own account
+      allow create: if isAuthenticated() && request.resource.data.fromUserId == request.auth.uid;
+      // Messages are immutable
+      allow update, delete: if false;
+    }
+  }
+}
