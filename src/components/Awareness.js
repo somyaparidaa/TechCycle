@@ -1,68 +1,57 @@
 import React, { useState } from "react";
 import {
-  AlertTriangle,
-  Info,
-  TreeDeciduous,
   Upload,
   X,
-  Camera,
-  ImageIcon,
-  CheckCircle,
   AlertCircle,
+  CheckCircle2,
+  AlertTriangle,
+  RotateCcw,
+  Sparkles,
+  ShieldCheck,
+  Cpu,
 } from "lucide-react";
 import "../styles/Awareness.css";
-import img5 from "../images/image.png";
-
-const facts = [
-  {
-    title: "Growing E-Waste Crisis",
-    description:
-      "E-waste is rapidly increasing due to rising electronics consumption and short product lifecycles. Toxic materials like lead and mercury pollute soil and water, harming ecosystems and human health. Poor recycling practices worsen the crisis, especially in developing nations.",
-    icon: AlertTriangle,
-  },
-  {
-    title: "Environmental Impact",
-    description:
-      "E-waste recycling reduces landfill waste, conserves natural resources, and prevents toxic chemicals like lead and mercury from polluting air, soil, and water. However, improper recycling methods release hazardous substances, harming workers and ecosystems.",
-    icon: TreeDeciduous,
-  },
-  {
-    title: "Valuable Materials",
-    description:
-      "Electronic waste holds valuable materials like gold, silver, and rare metals. One metric ton of circuit boards contains 40–800 times more gold than mined ore, making e-waste recycling highly profitable.",
-    icon: Info,
-  },
-];
 
 const Awareness = () => {
+  const [selectedFile, setSelectedFile] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [prediction, setPrediction] = useState(null);
+  const [result, setResult] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [error, setError] = useState(null);
-  const [showModal, setShowModal] = useState(false);
 
-  const handleImageUpload = async (e) => {
+  const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     if (file.size > 10 * 1024 * 1024) {
-      setError("File size exceeds 10MB limit");
+      setError("File size exceeds 10MB limit.");
       return;
     }
 
     if (!file.type.startsWith("image/")) {
-      setError("Please upload an image file");
+      setError("Please select a valid image file (PNG, JPG, JPEG, WEBP).");
       return;
     }
 
     setError(null);
+    setResult(null);
+    setSelectedFile(file);
     const imageUrl = URL.createObjectURL(file);
     setSelectedImage(imageUrl);
-    setPrediction(null);
+  };
+
+  const handleClassify = async () => {
+    if (!selectedFile) {
+      setError("Please select an image first.");
+      return;
+    }
+
     setIsAnalyzing(true);
+    setError(null);
+    setResult(null);
 
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", selectedFile);
 
     try {
       const response = await fetch("http://127.0.0.1:8000/identify-ewaste", {
@@ -70,144 +59,225 @@ const Awareness = () => {
         body: formData,
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error("Failed to analyze image");
+        if (response.status === 503) {
+          throw new Error(data.error || "Model service unavailable. Weights pending loading.");
+        }
+        throw new Error(data.error || "Failed to analyze image. Please try again.");
       }
 
-      const data = await response.json();
-      setPrediction(data.prediction);
-      setShowModal(true); // Show modal
-    } catch (error) {
-      setError("Error analyzing image. Please try again.");
-      console.error("Error:", error);
+      if (data.status === "error") {
+        throw new Error(data.error || "Inference failed on the uploaded image.");
+      }
+
+      setResult(data);
+    } catch (err) {
+      console.error("Inference request error:", err);
+      setError(
+        err.message ||
+          "Could not connect to the AI Scanner backend. Ensure the server is running at http://127.0.0.1:8000."
+      );
     } finally {
       setIsAnalyzing(false);
     }
   };
 
   const clearImage = () => {
+    if (selectedImage) {
+      URL.revokeObjectURL(selectedImage);
+    }
+    setSelectedFile(null);
     setSelectedImage(null);
-    setPrediction(null);
+    setResult(null);
     setError(null);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
-  };
+  const isLowConfidence = result && typeof result.confidence === "number" && result.confidence < 40.0;
 
   return (
     <div className="awareness-container">
-      {/* Awareness Facts */}
-      <div className="awareness-card">
-        <h2 className="sections-title">E-Waste Awareness</h2>
-        <div className="facts-grid">
-          {facts.map((fact, index) => (
-            <div key={index} className="fact-card">
-              <div className="fact-header">
-                <fact.icon className="fact-icon" />
-                <h3 className="fact-title">{fact.title}</h3>
-              </div>
-              <p className="fact-description">{fact.description}</p>
-            </div>
-          ))}
+      {/* Scanner Header Banner */}
+      <div className="scanner-hero-card">
+        <div className="scanner-hero-badge">
+          <Sparkles className="badge-icon" size={16} />
+          <span>MobileNetV2 Neural Classifier • 36 E-Waste Classes</span>
         </div>
+        <h1 className="scanner-hero-title">Give your e-waste a second life.</h1>
+        <p className="scanner-hero-subtitle">
+          Upload a clear photo of any electronic component or discarded device.
+          Our deep learning model identifies the part in real-time and prescribes certified
+          environmental handling directives.
+        </p>
       </div>
 
-      {/* E-Waste Identifier */}
-      <div className="awareness-card">
-        <h2 className="identifier-title">E-Waste Identifier</h2>
-        <p className="identifier-subtitle">
-          Upload a photo of your electronic waste for identification and
-          recycling guidance
-        </p>
+      {/* Main Interactive Workspace */}
+      <div className="scanner-workspace-card">
+        <div className="workspace-header">
+          <div className="header-meta">
+            <Cpu className="header-icon" size={24} />
+            <div>
+              <h2 className="workspace-title">E-Waste AI Scanner</h2>
+              <p className="workspace-desc">
+                Supports common PCBs, semiconductors, capacitors, transformers, microchips, and discrete parts.
+              </p>
+            </div>
+          </div>
+          {selectedImage && !isAnalyzing && (
+            <button
+              type="button"
+              onClick={clearImage}
+              className="scanner-reset-btn"
+              title="Clear selection"
+            >
+              <RotateCcw size={16} />
+              <span>Reset</span>
+            </button>
+          )}
+        </div>
 
-        <div className="upload-area">
+        {/* Upload / Preview Stage */}
+        <div className="scanner-upload-stage">
           <input
             type="file"
             accept="image/*"
-            onChange={handleImageUpload}
-            className="hidden"
-            id="image-upload"
+            onChange={handleFileChange}
+            className="scanner-file-input"
+            id="scanner-image-input"
+            disabled={isAnalyzing}
           />
 
           {!selectedImage ? (
-            <label htmlFor="image-upload" className="upload-label">
-              <Upload className="upload-icon" />
-              <span className="upload-text">
-                <strong>Click to upload</strong> or drag and drop
+            <label htmlFor="scanner-image-input" className="scanner-dropzone">
+              <div className="dropzone-icon-wrap">
+                <Upload className="dropzone-icon" size={36} />
+              </div>
+              <span className="dropzone-title">Click to upload or drag & drop</span>
+              <span className="dropzone-hint">
+                PNG, JPG, JPEG, or WEBP up to 10MB (centered with good lighting recommended)
               </span>
-              <p className="upload-hint">PNG, JPG, up to 10MB</p>
             </label>
           ) : (
-            <div className="uploaded-image-wrapper">
-              <button onClick={clearImage} className="remove-image-btn">
-                <X className="remove-image-icon" />
-              </button>
-              <img
-                src={selectedImage}
-                alt="Selected"
-                className="uploaded-image"
-              />
+            <div className="scanner-preview-container">
+              <div className="preview-image-box">
+                <img
+                  src={selectedImage}
+                  alt="Component to classify"
+                  className="preview-image"
+                />
+                {!isAnalyzing && (
+                  <button
+                    type="button"
+                    onClick={clearImage}
+                    className="preview-close-btn"
+                    aria-label="Remove image"
+                  >
+                    <X size={18} />
+                  </button>
+                )}
+              </div>
+
+              {/* Action Buttons */}
+              <div className="scanner-actions-bar">
+                <label
+                  htmlFor="scanner-image-input"
+                  className={`scanner-secondary-btn ${isAnalyzing ? "disabled" : ""}`}
+                >
+                  <Upload size={16} />
+                  <span>Choose Different Photo</span>
+                </label>
+
+                <button
+                  type="button"
+                  onClick={handleClassify}
+                  disabled={isAnalyzing}
+                  className="scanner-primary-btn"
+                >
+                  {isAnalyzing ? (
+                    <>
+                      <div className="spinner-dot" />
+                      <span>Classifying Component...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles size={18} />
+                      <span>Identify Component</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           )}
         </div>
 
+        {/* Error Notice */}
         {error && (
-          <div className="identifier-error">
-            <AlertCircle className="error-icon" />
-            <span>{error}</span>
-          </div>
-        )}
-
-        {isAnalyzing && (
-          <div className="identifier-analyzing">
-            <div className="loader-dot"></div>
-            <div className="loader-dot delay-100"></div>
-            <div className="loader-dot delay-200"></div>
-            <span className="analyzing-text">Analyzing image...</span>
-          </div>
-        )}
-      </div>
-
-      {/* Modal for prediction result */}
-      {showModal && prediction && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <button className="modal-close-btn" onClick={closeModal}>
-              <X size={20} />
-            </button>
-            <CheckCircle className="modal-icon" />
-            <h3 className="modal-title">Analysis Result</h3>
-            <p className="modal-prediction">{prediction}</p>
-            <div className="recycling-instructions">
-              <h4>Recycling Instructions:</h4>
-              <ul>
-                <li>Remove any batteries before recycling</li>
-                <li>Ensure all personal data is wiped</li>
-                <li>Take to your nearest e-waste center</li>
-              </ul>
+          <div className="scanner-alert scanner-alert-error" role="alert">
+            <AlertCircle className="alert-icon" size={20} />
+            <div className="alert-text">
+              <strong>Identification Error:</strong> {error}
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Impact Section */}
-      <div className="awareness-card">
-        <h2 className="section-title">Impact of E-Waste Recycling</h2>
-        <div className="impact-grid">
-          <div className="image-container">
-            <img src={img5} alt="E-waste recycling" className="impact-image" />
+        {/* Live Classification Results */}
+        {result && (
+          <div className={`scanner-result-card ${isLowConfidence ? "low-confidence" : "high-confidence"}`}>
+            <div className="result-header">
+              <div className="result-status-indicator">
+                {isLowConfidence ? (
+                  <AlertTriangle className="status-icon warning" size={26} />
+                ) : (
+                  <CheckCircle2 className="status-icon success" size={26} />
+                )}
+                <div>
+                  <span className="result-tagline">
+                    {isLowConfidence ? "Low-Confidence Classification" : "Component Identified"}
+                  </span>
+                  <h3 className="result-component-name">{result.prediction}</h3>
+                </div>
+              </div>
+
+              {typeof result.confidence === "number" && (
+                <div className="confidence-badge-wrapper">
+                  <div className="confidence-badge">
+                    <span className="confidence-label">Confidence</span>
+                    <span className="confidence-val">{result.confidence}%</span>
+                  </div>
+                  <div className="confidence-meter-bg">
+                    <div
+                      className={`confidence-meter-fill ${isLowConfidence ? "fill-warning" : "fill-success"}`}
+                      style={{ width: `${Math.min(100, Math.max(0, result.confidence))}%` }}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Low Confidence Warning Note */}
+            {isLowConfidence && (
+              <div className="low-confidence-banner">
+                <AlertTriangle size={18} />
+                <span>
+                  The model prediction confidence is below the verified 40% threshold.
+                  Please verify this component manually or re-upload a closer, well-lit photo before proceeding with disposal.
+                </span>
+              </div>
+            )}
+
+            {/* Recycling Directive Section */}
+            {result.recycling_guide && (
+              <div className="recycling-directive-box">
+                <div className="directive-header">
+                  <ShieldCheck size={18} className="directive-icon" />
+                  <h4>Prescribed Environmental Directive</h4>
+                </div>
+                <p className="directive-text">{result.recycling_guide}</p>
+              </div>
+            )}
           </div>
-          <div className="impact-content">
-            <h3>Why Recycle E-Waste?</h3>
-            <ul>
-              <li>Prevents toxic materials from entering landfills</li>
-              <li>Recovers valuable materials for reuse</li>
-              <li>Reduces energy consumption in manufacturing</li>
-              <li>Creates green jobs in recycling industry</li>
-            </ul>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

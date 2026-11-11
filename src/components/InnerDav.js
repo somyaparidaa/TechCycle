@@ -77,7 +77,7 @@ function Navbar() {
                 <Link to="dashboard">Profile</Link>
                 <Link to="info">Sell/Buy</Link>
                 <Link to="map">Recycling Centers</Link>
-                <Link to="awareness">Awareness</Link>
+                <Link to="awareness">AI Scanner</Link>
                 <Link to="institution">Institutions</Link>
                 <Link to="feedback">Feedback</Link>
               </div>
