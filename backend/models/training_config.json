@@ -1,0 +1,20 @@
+{
+  "model_name": "MobileNetV2_TransferLearning",
+  "num_classes": 36,
+  "image_size": [
+    224,
+    224
+  ],
+  "batch_size": 32,
+  "phase1_epochs_trained": 8,
+  "phase2_epochs_trained": 12,
+  "test_evaluation": {
+    "accuracy": 0.48132271892222905,
+    "macro_precision": 0.4856818500044597,
+    "macro_recall": 0.49698724432524816,
+    "macro_f1": 0.48613976621844224,
+    "weighted_f1": 0.47499532380460124
+  },
+  "leak_free_split": true,
+  "class_weighting": true
+}

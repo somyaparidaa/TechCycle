@@ -39,13 +39,20 @@ def load_active_model():
     candidates = [KERAS_MODEL_PATH, H5_MODEL_PATH, ROOT_H5_PATH]
     for path in candidates:
         if os.path.exists(path):
+            # Prefer standalone Keras 3.x loader if available, fallback to tf.keras
             try:
-                from tensorflow.keras.models import load_model
-                model = load_model(path)
-                print(f"[✓] Loaded active model weights from {path}")
+                import keras
+                model = keras.models.load_model(path)
+                print(f"[✓] Loaded active model weights from {path} via Keras {keras.__version__}")
                 return model
-            except Exception as e:
-                print(f"[!] Warning: Found model file at {path} but failed to load: {e}")
+            except Exception as e_keras:
+                try:
+                    from tensorflow.keras.models import load_model
+                    model = load_model(path)
+                    print(f"[✓] Loaded active model weights from {path} via tf.keras")
+                    return model
+                except Exception as e_tf:
+                    print(f"[!] Warning: Found model file at {path} but failed to load (Keras error: {e_keras}, TF error: {e_tf})")
     return None
 
 load_active_model()
@@ -65,7 +72,14 @@ def predict_image(img_path):
     """
     try:
         if model is not None:
-            from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
+            try:
+                from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
+            except (ImportError, ModuleNotFoundError):
+                try:
+                    from keras.applications.mobilenet_v2 import preprocess_input
+                except (ImportError, ModuleNotFoundError):
+                    def preprocess_input(x):
+                        return (x / 127.5) - 1.0
 
             # 1. Load and standardize image to RGB 224x224
             img = Image.open(img_path).convert("RGB").resize((224, 224))

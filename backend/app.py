@@ -29,6 +29,14 @@ def read_root():
         "model_loaded": is_model_loaded()
     }
 
+@app.get("/health")
+def health_check():
+    return {
+        "status": "healthy" if is_model_loaded() else "degraded",
+        "model_loaded": is_model_loaded(),
+        "service": "TechCycle E-Waste Identification API"
+    }
+
 @app.post("/identify-ewaste")
 async def identify_ewaste(file: UploadFile = File(...)):
     file_path = f"temp_{file.filename}"
