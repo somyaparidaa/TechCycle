@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../styles/Mission.css";
-import img1 from "../images/mission1.png";
+import img1 from "../images/E-Waste1.jpeg";
 import img2 from "../images/E-Waste2.jpeg";
 import img3 from "../images/E-Waste3.jpeg";
 import img4 from "../images/E-Waste8.jpg";

@@ -9,6 +9,25 @@
 
 ---
 
+## Table of Contents
+
+- [Overview & Problem Statement](#overview--problem-statement)
+- [Key Features](#key-features)
+- [System Architecture](#system-architecture)
+- [CNN Deep Learning Architecture](#cnn-deep-learning-architecture)
+- [Deep Learning Pipeline](#deep-learning-pipeline)
+- [Technology Stack](#technology-stack)
+- [Project Directory Structure](#project-directory-structure)
+- [Prerequisites & Environment Setup](#prerequisites--environment-setup)
+- [Installation & Local Run Guide](#installation--local-run-guide)
+  - [1. Backend Setup (FastAPI & ML Inference)](#1-backend-setup-fastapi--ml-inference)
+  - [2. Frontend Setup (React Application)](#2-frontend-setup-react-application)
+- [Testing & Quality Assurance](#testing--quality-assurance)
+- [Security & Repository Safety](#security--repository-safety)
+- [License](#license)
+
+---
+
 ## Overview & Problem Statement
 
 Over 57 million metric tons of electronic waste are discarded annually, yet less than 20% is documented as formally collected and recycled. Discarded electronics contain hazardous heavy metals (lead, mercury, cadmium) that contaminate groundwater, alongside high-value precious metals (gold, copper, palladium) that can be reclaimed at fractions of the carbon cost of virgin mining.
@@ -49,58 +68,121 @@ Over 57 million metric tons of electronic waste are discarded annually, yet less
 
 ## System Architecture
 
+The following diagram illustrates the end-to-end dataflow between the client application, Google Cloud/Firebase services, and the FastAPI deep learning inference backend:
+
+```mermaid
+flowchart TB
+    %% Client Tier
+    subgraph ClientTier ["Frontend Client Tier • React 19 (Port 3000)"]
+        direction TB
+        UI["User Interface (SPA Components)"]
+        Scanner["AI Scanner UI (/profile/awareness)"]
+        Marketplace["Marketplace & Wishlist (/profile/info)"]
+        MapUI["Recycling Center Map (/profile/map)"]
+        ChatbotUI["Gemini Chatbot Widget"]
+        AuthContext["AuthProvider (State & Token Cache)"]
+    end
+
+    %% Cloud Services Tier
+    subgraph CloudTier ["Cloud & Managed Services Tier (Firebase / GCP)"]
+        direction TB
+        FirebaseAuth["Firebase Authentication\n(Email/Password & Google OAuth)"]
+        Firestore[("Cloud Firestore\n(users, marketplace, wishlist, messages)")]
+        Storage[("Firebase Storage\n(devices/{userId} images)")]
+        GeminiAPI["Google Gemini Generative AI API"]
+    end
+
+    %% Inference Backend Tier
+    subgraph InferenceTier ["Backend ML Inference Tier • FastAPI & Uvicorn (Port 8000)"]
+        direction TB
+        Router["FastAPI Application (app.py)\nEndpoints: /health, /identify-ewaste"]
+        Pipeline["Inference Controller (predict_component.py)"]
+        Preprocess["Preprocessing Engine\n(224x224 RGB, [-1.0, 1.0] scaling)"]
+        Labels[("Class Metadata (class_labels.json)\n36 Component Classes & Safety Guides")]
+        ModelEngine["Model Runtime (Keras 3 / TensorFlow 2.15)\ncomponent_classifier.keras"]
+    end
+
+    %% User Interaction
+    User([End User / Recycler]) <-->|HTTPS / Browser| UI
+    UI --> Scanner
+    UI --> Marketplace
+    UI --> MapUI
+    UI --> ChatbotUI
+
+    %% Client to Cloud Integrations
+    UI <-->|Manage Auth Sessions| AuthContext
+    AuthContext <-->|OAuth / Identity Tokens| FirebaseAuth
+    Marketplace <-->|Firestore Queries & Realtime Updates| Firestore
+    Marketplace <-->|Upload / Download Device Photos| Storage
+    ChatbotUI <-->|Prompt & Response Stream| GeminiAPI
+
+    %% Client to FastAPI Backend
+    Scanner -->|POST /identify-ewaste\n(Multipart Image Upload)| Router
+    Router --> Pipeline
+    Pipeline --> Preprocess
+    Preprocess -->|Preprocessed Tensor [1, 224, 224, 3]| ModelEngine
+    ModelEngine -->|Softmax Probability Vector [1, 36]| Pipeline
+    Pipeline <-->|Query Label & Safety Directive| Labels
+    Pipeline -->|JSON: prediction, confidence, recycling_guide| Router
+    Router -->|HTTP 200 / 503 JSON Response| Scanner
+```
+
+---
+
+## CNN Deep Learning Architecture
+
+The e-waste classifier leverages **Transfer Learning** built upon a **MobileNetV2** backbone pretrained on ImageNet, followed by a custom feature extraction and multi-class classification head:
+
 ```mermaid
 flowchart TD
-    User([User / Browser])
+    In["Input Image\n(Raw JPEG / PNG / WEBP)"] --> P1["Standardize Resolution\nResize to 224 x 224 x 3"]
+    P1 --> P2["MobileNetV2 Normalization\npixel_norm = (pixel / 127.5) - 1.0\nRange: [-1.0, 1.0]"]
 
-    subgraph Frontend ["React 19 Client (Port 3000)"]
-        UI[Navbar, Dashboard, Profile]
-        Scanner["AI Scanner Component"]
-        AuthContext["AuthProvider (Firebase SDK)"]
+    subgraph Backbone ["Pretrained MobileNetV2 Feature Extractor"]
+        direction TB
+        B1["Conv1 + BatchNorm + ReLU6\n(32 filters, stride 2)"]
+        B2["16 Inverted Residual Bottleneck Blocks\n(Expansion + Depthwise Conv + Pointwise Conv)"]
+        B3["Conv2D 1x1\n(1280 feature maps)"]
+        B1 --> B2 --> B3
     end
 
-    subgraph Cloud ["Google Cloud / Firebase"]
-        FirebaseAuth["Firebase Auth (Email/Pass & Google)"]
-        Firestore["Cloud Firestore (users, marketplace, wishlist, messages)"]
-        Storage["Firebase Storage (devices/ images)"]
-        GeminiAPI["Google Gemini API (Chatbot)"]
+    P2 -->|Tensor: 224 x 224 x 3| B1
+    B3 -->|Feature Map: 7 x 7 x 1280| GAP["GlobalAveragePooling2D\nShape: [None, 1280]"]
+
+    subgraph CustomHead ["Custom 36-Class Classification Head"]
+        direction TB
+        BN["BatchNormalization\n(Head Regularization)"]
+        Dense1["Dense Layer (256 units, ReLU)\nKernel Regularizer: L2 (1e-4)"]
+        Drop["Dropout Layer (rate = 0.4)\nPrevents Feature Co-adaptation"]
+        Dense2["Dense Output Layer (36 units, Softmax)\nProbability Distribution"]
+        BN --> Dense1 --> Drop --> Dense2
     end
 
-    subgraph Backend ["FastAPI Inference Server (Port 8000)"]
-        API["FastAPI App (app.py)"]
-        Predict["predict_component.py"]
-        Model["MobileNetV2 (.keras / Keras 3.x)"]
-        Labels["class_labels.json (36 classes)"]
-    end
-
-    User -->|Interacts| UI
-    UI --> Scanner
-    UI --> AuthContext
-    AuthContext <-->|OAuth / Sessions| FirebaseAuth
-    UI <-->|CRUD Operations| Firestore
-    UI <-->|Image Uploads| Storage
-    UI <-->|Prompts| GeminiAPI
-
-    Scanner -->|POST /identify-ewaste (multipart/form-data)| API
-    API --> Predict
-    Predict --> Labels
-    Predict --> Model
-    Model -->|Probability Tensor| Predict
-    Predict -->|{prediction, confidence, recycling_guide}| API
-    API -->|JSON Response| Scanner
+    GAP --> BN
+    Dense2 --> Out["Predicted E-Waste Class (0..35)\n+ Confidence Score (%)"]
 ```
+
+### Model Layer Breakdown & Parameter Counts
+
+| Layer Stage | Layer Type | Output Shape | Parameters | Purpose |
+|---|---|---|---|---|
+| **0** | `InputLayer` | `(None, 224, 224, 3)` | 0 | Input image tensor |
+| **1** | `Functional` (`MobileNetV2`) | `(None, 7, 7, 1280)` | 2,257,984 | Inverted residual bottleneck feature extraction |
+| **2** | `GlobalAveragePooling2D` | `(None, 1280)` | 0 | Spatial dimension reduction |
+| **3** | `BatchNormalization` | `(None, 1280)` | 5,120 | Normalizes pooled representations |
+| **4** | `Dense` | `(None, 256)` | 327,936 | Non-linear dense feature representation (ReLU, L2) |
+| **5** | `Dropout` | `(None, 256)` | 0 | Regularization ($p = 0.40$) |
+| **6** | `Dense` (Output) | `(None, 36)` | 9,252 | Softmax multi-class component distribution |
+| **Total** | — | — | **2,600,292** (~25.8 MB) | Lightweight for real-time edge/API inference |
 
 ---
 
 ## Deep Learning Pipeline
 
-- **Architecture:** Pretrained ImageNet MobileNetV2 backbone with a custom classification head (`GlobalAveragePooling2D` $\rightarrow$ `BatchNormalization` $\rightarrow$ `Dense(256, ReLU, L2)` $\rightarrow$ `Dropout(0.4)` $\rightarrow$ `Dense(36, Softmax)`).
-- **Input Resolution:** $224 \times 224 \times 3$ RGB.
-- **Normalization:** Standard MobileNetV2 feature scaling to range $[-1.0, 1.0]$:
-  $$\text{pixel}_{\text{norm}} = \frac{\text{pixel}}{127.5} - 1.0$$
+- **Classes:** 36 verified e-waste categories (capacitors, microprocessors, relays, heatsinks, transformers, microchips, diodes, solenoids, coils, etc.).
 - **Training Strategy:** Two-phase transfer learning on Google Colab T4 GPU:
-  1. *Phase 1 (Warmup):* Frozen backbone, Adam optimizer ($\eta = 10^{-3}$), 8 epochs.
-  2. *Phase 2 (Fine-Tuning):* Top 30 convolutional layers unfrozen (`BatchNormalization` layers preserved frozen), Adam ($\eta = 10^{-5}$), 12 epochs.
+  1. *Phase 1 (Warmup):* Frozen MobileNetV2 backbone, Adam optimizer ($\eta = 10^{-3}$), 8 epochs.
+  2. *Phase 2 (Fine-Tuning):* Top 30 convolutional layers unfrozen (`BatchNormalization` layers preserved frozen to protect statistics), Adam ($\eta = 10^{-5}$), 12 epochs.
 - **Data Integrity:** Group-stratified 70/15/15 train/val/test split across 10,989 samples with SHA-256 deduplication to guarantee 0 data leakage.
 - **Saved Model Format:** `backend/models/component_classifier.keras` (Keras 3 format, 25.8 MB).
 
@@ -224,6 +306,20 @@ cd TechCycle
 # Install NPM dependencies
 npm install
 
+# Configure environment variables
+cp .env.example .env.local
+```
+
+Open `.env.local` in your editor and provide your Firebase credentials:
+```env
+REACT_APP_FIREBASE_API_KEY=your-actual-api-key
+REACT_APP_FIREBASE_AUTH_DOMAIN=techcycle-caf3e.firebaseapp.com
+REACT_APP_FIREBASE_PROJECT_ID=techcycle-caf3e
+REACT_APP_FIREBASE_STORAGE_BUCKET=techcycle-caf3e.firebasestorage.app
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
+REACT_APP_FIREBASE_APP_ID=your-app-id
+```
+
 Start the React development server:
 ```bash
 npm start
@@ -261,3 +357,9 @@ npm run build
 - **Model Weight Protection:** Large binary checkpoints (`*.keras`, `*.h5`, `*.weights.h5`) and training archives (`*.zip`) are ignored by `.gitignore` to keep git history lightweight and secure.
 - **Environment Isolation:** Local configuration files (`.env`, `.env.local`, `.env.*.local`) are ignored by version control to avoid credential leaks.
 - **Access Control:** Production-ready `firestore.rules` and `storage.rules` are checked into the repository, enforcing authenticated access and object-level ownership checks across user listings and wishlists.
+
+---
+
+## License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
