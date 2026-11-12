@@ -72,9 +72,7 @@ The following diagram illustrates the end-to-end dataflow between the client app
 
 ```mermaid
 flowchart TB
-    %% Client Tier
     subgraph ClientTier ["Frontend Client Tier • React 19 (Port 3000)"]
-        direction TB
         UI["User Interface (SPA Components)"]
         Scanner["AI Scanner UI (/profile/awareness)"]
         Marketplace["Marketplace & Wishlist (/profile/info)"]
@@ -83,47 +81,40 @@ flowchart TB
         AuthContext["AuthProvider (State & Token Cache)"]
     end
 
-    %% Cloud Services Tier
     subgraph CloudTier ["Cloud & Managed Services Tier (Firebase / GCP)"]
-        direction TB
-        FirebaseAuth["Firebase Authentication\n(Email/Password & Google OAuth)"]
-        Firestore[("Cloud Firestore\n(users, marketplace, wishlist, messages)")]
-        Storage[("Firebase Storage\n(devices/{userId} images)")]
+        FirebaseAuth["Firebase Authentication<br/>Email/Password & Google OAuth"]
+        Firestore[("Cloud Firestore<br/>users, marketplace, wishlist, messages")]
+        Storage[("Firebase Storage<br/>devices images")]
         GeminiAPI["Google Gemini Generative AI API"]
     end
 
-    %% Inference Backend Tier
     subgraph InferenceTier ["Backend ML Inference Tier • FastAPI & Uvicorn (Port 8000)"]
-        direction TB
-        Router["FastAPI Application (app.py)\nEndpoints: /health, /identify-ewaste"]
+        Router["FastAPI Application (app.py)<br/>Endpoints: /health, /identify-ewaste"]
         Pipeline["Inference Controller (predict_component.py)"]
-        Preprocess["Preprocessing Engine\n(224x224 RGB, [-1.0, 1.0] scaling)"]
-        Labels[("Class Metadata (class_labels.json)\n36 Component Classes & Safety Guides")]
-        ModelEngine["Model Runtime (Keras 3 / TensorFlow 2.15)\ncomponent_classifier.keras"]
+        Preprocess["Preprocessing Engine<br/>224x224 RGB, [-1.0, 1.0] scaling"]
+        Labels[("Class Metadata (class_labels.json)<br/>36 Component Classes & Safety Guides")]
+        ModelEngine["Model Runtime (Keras 3 / TensorFlow 2.15)<br/>component_classifier.keras"]
     end
 
-    %% User Interaction
     User([End User / Recycler]) <-->|HTTPS / Browser| UI
     UI --> Scanner
     UI --> Marketplace
     UI --> MapUI
     UI --> ChatbotUI
 
-    %% Client to Cloud Integrations
     UI <-->|Manage Auth Sessions| AuthContext
-    AuthContext <-->|OAuth / Identity Tokens| FirebaseAuth
+    AuthContext <-->|OAuth Tokens| FirebaseAuth
     Marketplace <-->|Firestore Queries & Realtime Updates| Firestore
-    Marketplace <-->|Upload / Download Device Photos| Storage
+    Marketplace <-->|Upload / Download Photos| Storage
     ChatbotUI <-->|Prompt & Response Stream| GeminiAPI
 
-    %% Client to FastAPI Backend
-    Scanner -->|POST /identify-ewaste\n(Multipart Image Upload)| Router
+    Scanner -->|POST /identify-ewaste (Multipart File)| Router
     Router --> Pipeline
     Pipeline --> Preprocess
     Preprocess -->|Preprocessed Tensor [1, 224, 224, 3]| ModelEngine
     ModelEngine -->|Softmax Probability Vector [1, 36]| Pipeline
     Pipeline <-->|Query Label & Safety Directive| Labels
-    Pipeline -->|JSON: prediction, confidence, recycling_guide| Router
+    Pipeline -->|prediction, confidence, recycling_guide| Router
     Router -->|HTTP 200 / 503 JSON Response| Scanner
 ```
 
@@ -135,31 +126,29 @@ The e-waste classifier leverages **Transfer Learning** built upon a **MobileNetV
 
 ```mermaid
 flowchart TD
-    In["Input Image\n(Raw JPEG / PNG / WEBP)"] --> P1["Standardize Resolution\nResize to 224 x 224 x 3"]
-    P1 --> P2["MobileNetV2 Normalization\npixel_norm = (pixel / 127.5) - 1.0\nRange: [-1.0, 1.0]"]
+    In["Input Image<br/>Raw JPEG / PNG / WEBP"] --> P1["Standardize Resolution<br/>Resize to 224 x 224 x 3"]
+    P1 --> P2["MobileNetV2 Normalization<br/>pixel_norm = (pixel / 127.5) - 1.0<br/>Range: [-1.0, 1.0]"]
 
     subgraph Backbone ["Pretrained MobileNetV2 Feature Extractor"]
-        direction TB
-        B1["Conv1 + BatchNorm + ReLU6\n(32 filters, stride 2)"]
-        B2["16 Inverted Residual Bottleneck Blocks\n(Expansion + Depthwise Conv + Pointwise Conv)"]
-        B3["Conv2D 1x1\n(1280 feature maps)"]
+        B1["Conv1 + BatchNorm + ReLU6<br/>32 filters, stride 2"]
+        B2["16 Inverted Residual Bottleneck Blocks<br/>Expansion + Depthwise Conv + Pointwise Conv"]
+        B3["Conv2D 1x1<br/>1280 feature maps"]
         B1 --> B2 --> B3
     end
 
     P2 -->|Tensor: 224 x 224 x 3| B1
-    B3 -->|Feature Map: 7 x 7 x 1280| GAP["GlobalAveragePooling2D\nShape: [None, 1280]"]
+    B3 -->|Feature Map: 7 x 7 x 1280| GAP["GlobalAveragePooling2D<br/>Shape: [None, 1280]"]
 
     subgraph CustomHead ["Custom 36-Class Classification Head"]
-        direction TB
-        BN["BatchNormalization\n(Head Regularization)"]
-        Dense1["Dense Layer (256 units, ReLU)\nKernel Regularizer: L2 (1e-4)"]
-        Drop["Dropout Layer (rate = 0.4)\nPrevents Feature Co-adaptation"]
-        Dense2["Dense Output Layer (36 units, Softmax)\nProbability Distribution"]
+        BN["BatchNormalization<br/>Head Regularization"]
+        Dense1["Dense Layer (256 units, ReLU)<br/>Kernel Regularizer: L2 (1e-4)"]
+        Drop["Dropout Layer (rate = 0.4)<br/>Prevents Feature Co-adaptation"]
+        Dense2["Dense Output Layer (36 units, Softmax)<br/>Probability Distribution"]
         BN --> Dense1 --> Drop --> Dense2
     end
 
     GAP --> BN
-    Dense2 --> Out["Predicted E-Waste Class (0..35)\n+ Confidence Score (%)"]
+    Dense2 --> Out["Predicted E-Waste Class (0..35)<br/>Confidence Score (%)"]
 ```
 
 ### Model Layer Breakdown & Parameter Counts
